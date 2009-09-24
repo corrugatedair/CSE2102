@@ -15,6 +15,7 @@ public class TravProf {
 	MedCond medCondInfo;
 	
 	public static void main(String[] args) {
+		
 
 	}
 	
@@ -23,7 +24,8 @@ public class TravProf {
 	 * 
 	 * 
 	 */
-	public TravProf(String myTravAgentID,
+	public TravProf(
+			String myTravAgentID,
 			String myFirstName,
 			String myLastName,
 			String myAddress,

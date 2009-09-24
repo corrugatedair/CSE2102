@@ -11,11 +11,6 @@ public class MedCond {
 	 * listed in the valid Allergy/Illness lists;
 	 */
 	public MedCond(String _mdContact, String _mdPhone, String _algType, String _illType) throws Exception {
-		setMdContact(_mdContact);
-		setMdPhone(_mdPhone);
-		setAlgType(_algType);
-		setIllType(_illType);
-		
 		//List of valid entries for algType
 		validAlgTypes = new String[4];
 		validAlgTypes[0] = "none";
@@ -30,6 +25,13 @@ public class MedCond {
 		validIllnessTypes[2] = "diabetes";
 		validIllnessTypes[3] = "asthma";
 		validIllnessTypes[4] = "other";
+		
+		setMdContact(_mdContact);
+		setMdPhone(_mdPhone);
+		setAlgType(_algType);
+		setIllType(_illType);
+		
+		
 	}
 	
 	//Getters & Setters
