@@ -15,7 +15,7 @@ public class TravProfInterface {
 	}
 	public void getUserChoice()
 	{
-		System.out.println()
+		System.out.println();
 	}
 
 }
