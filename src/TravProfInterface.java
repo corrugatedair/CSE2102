@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 public class TravProfInterface {
 	String[] menuChoices;
+	String travAgentID;
 
 	public TravProfInterface(String fileName) {
 		new TravProfDB(fileName);
@@ -26,18 +27,10 @@ public class TravProfInterface {
 		boolean valid = true;
 
 		do {
-			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-			String menuChoice = null;
-			try {
-		         menuChoice = br.readLine();
-			} catch (IOException ioe) {
-		         System.out.println("IO Error");
-		         valid = false;
-		         System.exit(1);
-			}
+			
 			try
 			{
-				int menuOption = Integer.parseInt(menuChoice);
+				int menuOption = Integer.parseInt(inputString()[0]);
 				
 				switch (menuOption) 
 				{
@@ -65,13 +58,39 @@ public class TravProfInterface {
 			}
 				
 		} while(valid == false);
+		String[] temp = inputString();
+		valid = true;
+		do 
+		{
+			if (temp[1].equalsIgnoreCase("failed")) {
+				valid = false;
+			}
+		} while (valid==false);
 	}
 
 	
-	/*private TravProf createNewTravProf()
+	private TravProf createNewTravProf()
 	{
+		String[][] requestedData = new String[8][2];
+		requestedData[0][0] = "Traveler Agent ID";
 		
-	}*/
+	}
+	
+	private String[] inputString()
+	{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] input = new String[2];
+		input[1] = "";
+		try {
+	         input[0] = br.readLine();
+		} catch (IOException ioe) {
+	         System.out.println("IO Error");
+	         input[1] = "failed";
+	         
+		}
+		return input;
+	}
+	}
 	
 
 }
