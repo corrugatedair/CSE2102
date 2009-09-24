@@ -35,10 +35,28 @@ public class MedCond {
 	}
 	
 	//Getters & Setters
+	
+	
 	public String getMdContact()
 	{
 		return mdContact;
 	}
+	public String[] getValidAlgTypes() {
+		return validAlgTypes;
+	}
+
+	public void setValidAlgTypes(String[] validAlgTypes) {
+		this.validAlgTypes = validAlgTypes;
+	}
+
+	public String[] getValidIllnessTypes() {
+		return validIllnessTypes;
+	}
+
+	public void setValidIllnessTypes(String[] validIllnessTypes) {
+		this.validIllnessTypes = validIllnessTypes;
+	}
+
 	public void setMdContact(String _mdContact)
 	{
 		mdContact = _mdContact;
@@ -60,7 +78,12 @@ public class MedCond {
 	public void setAlgType(String _algType) throws Exception
 	{
 		if (!checkIfValid(_algType, validAlgTypes))
-			throw new java.lang.Exception("Invalid Allergy Type");
+		{
+			System.out.println("Valid Allergy Types:");
+			for (int i =0; i<validAlgTypes.length; i++)
+				System.out.println(validAlgTypes[i]);
+			throw new java.lang.Exception("Invalid Allergy Type!");
+		}
 		algType = _algType;
 	}
 	
@@ -71,7 +94,12 @@ public class MedCond {
 	public void setIllType(String _illType) throws Exception
 	{
 		if (!checkIfValid(_illType, validIllnessTypes))
+		{
+			System.out.println("Valid Illness Types:");
+			for (int i =0; i<validIllnessTypes.length; i++)
+				System.out.println(validIllnessTypes[i]);
 			throw new java.lang.Exception("Invalid Illness Type");
+		}
 		illType = _illType;
 	}
 
