@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 
@@ -96,7 +95,6 @@ public class TravProfDB {
 	public boolean writeAllTravProf()
 	{
 		try {
-			File file = new File(fileName);
 	        BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
 	        
 			for (int ii = 0; ii < travelerList.length; ii++)
@@ -131,7 +129,7 @@ public class TravProfDB {
 	public void initializeDatabase()
 	{
 		try {
-	        BufferedReader in = new BufferedReader(new FileReader("infilename"));
+	        BufferedReader in = new BufferedReader(new FileReader(fileName));
 	        String str;
 	        while ((str = in.readLine()) != null) {
 	            process(str);
@@ -140,24 +138,36 @@ public class TravProfDB {
 	    } catch (Exception e) {
 	    }
 
-		
 	}
 
 	private void process(String str) {
 
+		String[] mystr = new String[12];
+		mystr = str.split(",");
 		
-		String travAgentID = myTempTravProf.getTravAgentID();
-		String firstName = myTempTravProf.getFirstName();
-		String lastName = myTempTravProf.getLastName();
-		String address = myTempTravProf.getAddress();
-		String phone = myTempTravProf.getPhone();
-		float tripCost = myTempTravProf.getTripCost();
-		String travelType = myTempTravProf.getTravelType();
-		String paymentType = myTempTravProf.getPaymentType();
-		MedCond medCondInfo = myTempTravProf.getMedCondInfo();
-		String mdContact = medCondInfo.getMdContact();
-		String mdPhone = medCondInfo.getMdPhone();
-		String algType = medCondInfo.getAlgType();
-		String illType = medCondInfo.getIllType();
+		MedCond medCondInfo;
+		try {
+			medCondInfo = new MedCond(
+					mystr[8],
+					mystr[9],
+					mystr[10],
+					mystr[11]);
+		} catch (Exception e) {
+			medCondInfo = null;
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		insertNewProfile(new TravProf(
+				mystr[0],
+				mystr[1],
+				mystr[2],
+				mystr[3],
+				mystr[4],
+				(float)Integer.parseInt(mystr[5]),
+				mystr[6],
+				mystr[7],
+				medCondInfo));
+
 	}
 }

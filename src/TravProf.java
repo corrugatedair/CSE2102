@@ -12,14 +12,17 @@ public class TravProf {
 	float tripCost;
 	String travelType;
 	String paymentType;
-	// Here we want to make medCondInfo the type of MedCond
 	MedCond medCondInfo;
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 	}
 	
+	/* Constructor: TravProf
+	 * Variables:
+	 * 
+	 * 
+	 */
 	public TravProf(String myTravAgentID,
 			String myFirstName,
 			String myLastName,
@@ -27,7 +30,8 @@ public class TravProf {
 			String myPhone,
 			float myTripCost,
 			String myTravelType,
-			String myPaymentType)
+			String myPaymentType,
+			MedCond myMedCond)
 	{
 
 		travAgentID = myTravAgentID;
