@@ -1,4 +1,6 @@
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 public class TravProfInterface {
 	String[] menuChoices;
 
@@ -15,7 +17,61 @@ public class TravProfInterface {
 	}
 	public void getUserChoice()
 	{
-		System.out.println();
+		System.out.println("Menu:");
+		for (int i=0; i<menuChoices.length; i++)
+		{
+			System.out.println(i + " - " + menuChoices[i]);
+		}
+		
+		boolean valid = true;
+
+		do {
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+			String menuChoice = null;
+			try {
+		         menuChoice = br.readLine();
+			} catch (IOException ioe) {
+		         System.out.println("IO Error");
+		         valid = false;
+		         System.exit(1);
+			}
+			try
+			{
+				int menuOption = Integer.parseInt(menuChoice);
+				
+				switch (menuOption) 
+				{
+					case 0: 
+						break;
+					case 1:
+						break;
+					case 2:
+						break;
+					case 3:
+						break;
+					case 4:
+						break;
+					case 5:
+						break;
+					case 6:
+						break;
+					default:
+						valid = false;
+				}
+			}
+			catch (java.lang.Exception e)
+			{
+				valid = false;
+			}
+				
+		} while(valid == false);
 	}
+
+	
+	/*private TravProf createNewTravProf()
+	{
+		
+	}*/
+	
 
 }
