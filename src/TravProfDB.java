@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
 
 
 public class TravProfDB {
@@ -10,12 +11,12 @@ public class TravProfDB {
 	 * @param args
 	 */
 	int numTravelers = 0;
-	TravProf travelerList[];
+	ArrayList<TravProf> travelerList = new ArrayList<TravProf>();
+	TravProf mytravelerList[] = new TravProf[10];
 	int currentTravelerIndex = 0;
 	String fileName = "";
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -29,45 +30,51 @@ public class TravProfDB {
 	
 	public void insertNewProfile(TravProf myTravProf)
 	{
-		travelerList[travelerList.length] = myTravProf;
+		travelerList.add(currentTravelerIndex, myTravProf);
 	}
 	
 	public TravProf findProfile(String myTravAgentID, String lastName)
 	{
 		currentTravelerIndex = FindTravProfint(myTravAgentID, lastName);
-		return travelerList[currentTravelerIndex];
+		return travelerList.get(currentTravelerIndex);
 	}
 
 	public TravProf findFirstProfile()
 	{
 		currentTravelerIndex = 0;
-		return travelerList[0];
+		return travelerList.get(0);
 	}
 
 	public TravProf findNextProfile()
 	{
 		currentTravelerIndex++;
-		return travelerList[currentTravelerIndex];
+		return travelerList.get(currentTravelerIndex);
 	}
 	
 	public boolean deleteProfile(String myTravAgentID, String lastName)
 	{
 		int myTravProfNum = FindTravProfint(myTravAgentID, lastName);
-		travelerList[myTravProfNum] = null;
-		for (int ii = myTravProfNum+1; ii < travelerList.length; ii++)
+		travelerList.remove(myTravProfNum);
+		numTravelers--;
+		
+		for (int ii = myTravProfNum+1; ii < travelerList.size(); ii++)
 		{
-			travelerList[ii-1] = travelerList[ii];
+			travelerList.set(ii-1,travelerList.get(ii));
 		}
+		currentTravelerIndex--;
+		
 		return false;
 	}
 	
 	public int FindTravProfint(String myTravAgentID, String lastName)
 	{
-		for (int ii = 0; ii < travelerList.length; ii++)
+		for (int ii = 0; ii < travelerList.size(); ii++)
 		{
-			if (travelerList[ii].getLastName().equals(lastName))
+			TravProf myTempTraveler = travelerList.get(ii);
+			
+			if (myTempTraveler.getLastName().equals(lastName))
 			{
-				if (travelerList[ii].getTravAgentID().equals(myTravAgentID))
+				if (myTempTraveler.getTravAgentID().equals(myTravAgentID))
 				{
 					return ii;
 				}
@@ -78,14 +85,16 @@ public class TravProfDB {
 
 	public TravProf FindTravProf(String myTravAgentID, String lastName)
 	{
-		for (int ii = 0; ii < travelerList.length; ii++)
+		for (int ii = 0; ii < travelerList.size(); ii++)
 		{
-			if (travelerList[ii].getLastName().equals(lastName))
+			TravProf myTempTraveler = travelerList.get(ii);
+			
+			if (myTempTraveler.getLastName().equals(lastName))
 			{
-				if (travelerList[ii].getTravAgentID().equals(myTravAgentID))
+				if (myTempTraveler.getTravAgentID().equals(myTravAgentID))
 				{
 					currentTravelerIndex = ii;
-					return travelerList[ii];
+					return myTempTraveler;
 				}
 			}
 		}
@@ -97,9 +106,9 @@ public class TravProfDB {
 		try {
 	        BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
 	        
-			for (int ii = 0; ii < travelerList.length; ii++)
+			for (int ii = 0; ii < travelerList.size(); ii++)
 			{
-				TravProf myTempTravProf = travelerList[ii];
+				TravProf myTempTravProf = travelerList.get(ii);
 				String travAgentID = myTempTravProf.getTravAgentID();
 				String firstName = myTempTravProf.getFirstName();
 				String lastName = myTempTravProf.getLastName();
