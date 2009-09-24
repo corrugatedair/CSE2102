@@ -28,45 +28,91 @@ public class TravProfDB {
 		
 	}
 	
+	// Add a new travel profile to the travel profile array
 	public void insertNewProfile(TravProf myTravProf)
 	{
 		travelerList.add(currentTravelerIndex, myTravProf);
 	}
 	
-	public TravProf findProfile(String myTravAgentID, String lastName)
+	/* Find a specific travel profile
+	 * Input:
+	 * String myTravAgentID
+	 * String lastName
+	 * Output:
+	 * TravProf
+	 * 
+	 * Throws an Exception if it cannot find the specified Travel Profile
+	 * "Specified travel profile not in the database."
+	 */
+	public TravProf findProfile(String myTravAgentID, String lastName) throws Exception
 	{
 		currentTravelerIndex = FindTravProfint(myTravAgentID, lastName);
-		return travelerList.get(currentTravelerIndex);
+		try
+		{
+			return travelerList.get(currentTravelerIndex);
+		}
+		catch(Exception ex)
+		{
+			throw new Exception("Specified travel profile not in the database.");
+		}
 	}
 
-	public TravProf findFirstProfile()
+	/* Find the first travel profile
+	 * Input:
+	 * 
+	 * Output:
+	 * TravProf
+	 * 
+	 * Throws an Exception if it cannot find the specified Travel Profile
+	 * "No travel profiles in the database.."
+	 */
+	public TravProf findFirstProfile() throws Exception
 	{
 		currentTravelerIndex = 0;
-		return travelerList.get(0);
+		try
+		{
+			return travelerList.get(0);	
+		}
+		catch (Exception ex)
+		{
+			throw new Exception("No travel profiles in the database.");
+		}
 	}
 
-	public TravProf findNextProfile()
+	public TravProf findNextProfile() throws Exception
 	{
 		currentTravelerIndex++;
-		return travelerList.get(currentTravelerIndex);
+		try
+		{
+			return travelerList.get(currentTravelerIndex);
+		}
+		catch (Exception ex)
+		{
+			throw new Exception("No more travel profiles in the database.");
+		}
 	}
 	
-	public boolean deleteProfile(String myTravAgentID, String lastName)
+	public boolean deleteProfile(String myTravAgentID, String lastName) throws Exception
 	{
 		int myTravProfNum = FindTravProfint(myTravAgentID, lastName);
-		travelerList.remove(myTravProfNum);
-		numTravelers--;
-		
-		for (int ii = myTravProfNum+1; ii < travelerList.size(); ii++)
+//		if (myTravProfNum.size() > 1)
+//			throw new Exception("Multiple profiles found for TravelAgentID:" + myTravAgentID + ", LastName:" + lastName);
+		try
 		{
-			travelerList.set(ii-1,travelerList.get(ii));
+			travelerList.remove(myTravProfNum);
+			numTravelers--;
+			currentTravelerIndex = myTravProfNum;
+			
+			return true;
 		}
-		currentTravelerIndex--;
+		catch(Exception ex)
+		{
+			return false;
+		}
 		
-		return false;
 	}
 	
-	public int FindTravProfint(String myTravAgentID, String lastName)
+	private int FindTravProfint(String myTravAgentID, String lastName)
 	{
 		for (int ii = 0; ii < travelerList.size(); ii++)
 		{
@@ -83,23 +129,23 @@ public class TravProfDB {
 		return -1;
 	}
 
-	public TravProf FindTravProf(String myTravAgentID, String lastName)
-	{
-		for (int ii = 0; ii < travelerList.size(); ii++)
-		{
-			TravProf myTempTraveler = travelerList.get(ii);
-			
-			if (myTempTraveler.getLastName().equals(lastName))
-			{
-				if (myTempTraveler.getTravAgentID().equals(myTravAgentID))
-				{
-					currentTravelerIndex = ii;
-					return myTempTraveler;
-				}
-			}
-		}
-		return null;
-	}
+//	private TravProf FindTravProf(String myTravAgentID, String lastName)
+//	{
+//		for (int ii = 0; ii < travelerList.size(); ii++)
+//		{
+//			TravProf myTempTraveler = travelerList.get(ii);
+//			
+//			if (myTempTraveler.getLastName().equals(lastName))
+//			{
+//				if (myTempTraveler.getTravAgentID().equals(myTravAgentID))
+//				{
+//					currentTravelerIndex = ii;
+//					return myTempTraveler;
+//				}
+//			}
+//		}
+//		return null;
+//	}
 	
 	public boolean writeAllTravProf()
 	{
@@ -130,6 +176,7 @@ public class TravProfDB {
 			}
 	        out.close();
 	    } catch (Exception e) {
+	    	System.out.println(e);
 	    }
 
 		return true;
@@ -145,6 +192,7 @@ public class TravProfDB {
 	        }
 	        in.close();
 	    } catch (Exception e) {
+	    	System.out.println(e);
 	    }
 
 	}
