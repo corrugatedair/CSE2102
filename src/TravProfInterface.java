@@ -6,7 +6,6 @@ public class TravProfInterface {
 	String[] menuChoices;
 	String travAgentID;
 	TravProfDB database;
-	
 
 	public TravProfInterface(String fileName) {
 		database = new TravProfDB(fileName);
@@ -19,6 +18,7 @@ public class TravProfInterface {
 		menuChoices[5] = "Write to Database";
 		menuChoices[6] = "Initialize Database";
 		menuChoices[7] = "Quit";
+		getUserChoice();
 	}
 	public void getUserChoice()
 	{
@@ -96,7 +96,15 @@ public class TravProfInterface {
 	
 	private void deleteTravProf()
 	{
-		boolean success = database.deleteProfile(travAgentID, inputString("Last name of profile to delete?","string"));
+		boolean success = true;
+		try
+		{
+			database.deleteProfile(travAgentID, inputString("Last name of profile to delete?","string"));
+		}
+		catch (java.lang.Exception e)
+		{
+			success = false;
+		}
 		if (success)
 			System.out.println("Successfully deleted");
 		else
@@ -136,8 +144,15 @@ public class TravProfInterface {
 	
 	private void findTravProf()
 	{
-		TravProf temp = database.findProfile(travAgentID, inputString("Last name:","string"));
-		displayTravProf(temp);
+		try
+		{
+			TravProf temp = database.findProfile(travAgentID, inputString("Last name:","string"));
+			displayTravProf(temp);
+		}
+		catch (java.lang.Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	private void displayTravProf(TravProf temp)
@@ -163,17 +178,23 @@ public class TravProfInterface {
 	 */
 	private void displayAllProfiles()
 	{
-		displayTravProf(database.findFirstProfile());
-		boolean done = false;
-		while (done == false) {
-			try 
-			{
-				displayTravProf(database.findNextProfile());
+		try {
+			displayTravProf(database.findFirstProfile());
+			boolean done = false;
+			while (done == false) {
+				try 
+				{
+					displayTravProf(database.findNextProfile());
+				}
+				catch (java.lang.Exception e)
+				{
+					done = true;
+				}
 			}
-			catch (java.lang.Exception e)
-			{
-				done = true;
-			}
+		}
+		catch (java.lang.Exception e)
+		{
+			System.out.println(e.getMessage());
 		}
 	}
 	
@@ -182,68 +203,75 @@ public class TravProfInterface {
 		boolean valid;
 		do {
 			valid = true;
-			TravProf temp = database.findProfile(travAgentID, inputString("Last name? ", "string"));
-			displayTravProf(temp);
-			int choice = Integer.parseInt(inputString("Modify which field? (Enter the number)","int"));
-			switch (choice) {
-				case 1:
-					temp.setAddress(inputString("New Address?", "string"));
-					break;
-				case 2:
-					temp.setPhone(inputString("New Phone?", "string"));
-					break;
-				case 3:
-					temp.setPaymentType((inputString("New Payment Type?", "string")));
-					break;
-				case 4:
-					temp.setTravelType(inputString("New Travel Type?", "string"));
-					break;
-				case 5:
-					temp.setTripCost(Float.parseFloat(inputString("New Trip Cost?", "float")));
-					break;
-				case 6:
-					MedCond tempMed = temp.getMedCondInfo();
-					tempMed.setMdContact(inputString("New Medical Contact?","string"));
-					break;
-				case 7:
-					MedCond tempMed1 = temp.getMedCondInfo();
-					tempMed1.setMdPhone(inputString("New Medical Phone?","string"));
-					break;
-				case 8:
-					MedCond tempMed2 = temp.getMedCondInfo();
-					boolean validAlg;
-					do {
-						validAlg = true;
-						try
-						{
-							tempMed2.setAlgType(inputString("New Allergy?","string"));
-						}
-						catch (java.lang.Exception e)
-						{
-							validAlg = false;
-						}
-						
-					} while (validAlg == false);
-					break;
-				case 9:
-					MedCond tempMed3 = temp.getMedCondInfo();
-					boolean validIllness;
-					do {
-						validIllness = true;
-						try
-						{
-							tempMed3.setIllType(inputString("New Illness?","string"));
-						}
-						catch (java.lang.Exception e)
-						{
-							validIllness = false;
-						}
-						
-					} while (validIllness == false);
-					break;
-				default:
-					valid = false;
-					break;
+			try
+			{
+				TravProf temp = database.findProfile(travAgentID, inputString("Last name? ", "string"));
+				displayTravProf(temp);
+				int choice = Integer.parseInt(inputString("Modify which field? (Enter the number)","int"));
+				switch (choice) {
+					case 1:
+						temp.setAddress(inputString("New Address?", "string"));
+						break;
+					case 2:
+						temp.setPhone(inputString("New Phone?", "string"));
+						break;
+					case 3:
+						temp.setPaymentType((inputString("New Payment Type?", "string")));
+						break;
+					case 4:
+						temp.setTravelType(inputString("New Travel Type?", "string"));
+						break;
+					case 5:
+						temp.setTripCost(Float.parseFloat(inputString("New Trip Cost?", "float")));
+						break;
+					case 6:
+						MedCond tempMed = temp.getMedCondInfo();
+						tempMed.setMdContact(inputString("New Medical Contact?","string"));
+						break;
+					case 7:
+						MedCond tempMed1 = temp.getMedCondInfo();
+						tempMed1.setMdPhone(inputString("New Medical Phone?","string"));
+						break;
+					case 8:
+						MedCond tempMed2 = temp.getMedCondInfo();
+						boolean validAlg;
+						do {
+							validAlg = true;
+							try
+							{
+								tempMed2.setAlgType(inputString("New Allergy?","string"));
+							}
+							catch (java.lang.Exception e)
+							{
+								validAlg = false;
+							}
+							
+						} while (validAlg == false);
+						break;
+					case 9:
+						MedCond tempMed3 = temp.getMedCondInfo();
+						boolean validIllness;
+						do {
+							validIllness = true;
+							try
+							{
+								tempMed3.setIllType(inputString("New Illness?","string"));
+							}
+							catch (java.lang.Exception e)
+							{
+								validIllness = false;
+							}
+							
+						} while (validIllness == false);
+						break;
+					default:
+						valid = false;
+						break;
+				}
+			}
+			catch (java.lang.Exception e)
+			{
+				System.out.println(e.getMessage());
 			}
 		} while (valid == false);
 		
@@ -252,7 +280,7 @@ public class TravProfInterface {
 	private String inputString(String prompt, String type)
 	{
 		boolean valid;
-		String input;
+		String input = "";
 		do {
 			System.out.println(prompt);
 			valid = true;
