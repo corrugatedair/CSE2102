@@ -9,7 +9,7 @@ public class TravProfInterface {
 
 	public TravProfInterface(String fileName) {
 		database = new TravProfDB(fileName);
-		menuChoices = new String[9];
+		menuChoices = new String[8];
 		menuChoices[0] = "Create a new traveler profile";
 		menuChoices[1] = "Delete a traveler by Name and Travel Agent ID";
 		menuChoices[2] = "Find and display a Traveler Profile by Name and Travel Agent ID";
@@ -22,15 +22,16 @@ public class TravProfInterface {
 	}
 	public void getUserChoice()
 	{
-		System.out.println("Menu:");
-		for (int i=0; i<menuChoices.length; i++)
-		{
-			System.out.println(i + " - " + menuChoices[i]);
-		}
-		String travelAgentID;
+		
 		boolean valid;
 		
 		do {
+			System.out.println("Menu:");
+			for (int i=0; i<menuChoices.length; i++)
+			{
+				System.out.println(i + " - " + menuChoices[i]);
+			}
+			String travelAgentID;
 			valid = false;
 			int menuOption = Integer.parseInt(inputString("Menu Option?","int"));
 			travelAgentID = inputString("Travel Agent ID?","string");
