@@ -40,17 +40,22 @@ public class TravProfInterface {
 						database.insertNewProfile(createNewTravProf(travelAgentID));
 						break;
 					case 1:
-						
+						deleteTravProf();
 						break;
 					case 2:
+						findTravProf();
 						break;
 					case 3:
+						modifyTravProf();
 						break;
 					case 4:
+						displayAllProfiles();
 						break;
 					case 5:
+						database.writeAllTravProf();
 						break;
 					case 6:
+						database.initializeDatabase();
 						break;
 					case 7:
 						valid = true;
@@ -137,18 +142,18 @@ public class TravProfInterface {
 	
 	private void displayTravProf(TravProf temp)
 	{
+		System.out.println("Travel Agent ID:" + temp.getTravAgentID());
 		System.out.println("Last Name:" + temp.getLastName());
 		System.out.println("First Name:" + temp.getFirstName());
-		System.out.println("Address:" + temp.getAddress());
-		System.out.println("Phone:" + temp.getPhone());
-		System.out.println("Payment Type:" + temp.getPaymentType());
-		System.out.println("Travel Type:" + temp.getTravelType());
-		System.out.println("Trip Cost:" + temp.getTripCost());
-		System.out.println("Travel Agent ID:" + temp.getTravAgentID());
-		System.out.println("Medical Contact:" + temp.getMedCondInfo().getMdContact());
-		System.out.println("Medical Phone:" + temp.getMedCondInfo().getMdPhone());
-		System.out.println("Allergy Type:" + temp.getMedCondInfo().getAlgType());
-		System.out.println("Illness Type:" + temp.getMedCondInfo().getIllType());
+		System.out.println("1 - Address:" + temp.getAddress());
+		System.out.println("2 - Phone:" + temp.getPhone());
+		System.out.println("3 - Payment Type:" + temp.getPaymentType());
+		System.out.println("4 - Travel Type:" + temp.getTravelType());
+		System.out.println("5 - Trip Cost:" + temp.getTripCost());
+		System.out.println("6 - Medical Contact:" + temp.getMedCondInfo().getMdContact());
+		System.out.println("7 - Medical Phone:" + temp.getMedCondInfo().getMdPhone());
+		System.out.println("8 - Allergy Type:" + temp.getMedCondInfo().getAlgType());
+		System.out.println("9 - Illness Type:" + temp.getMedCondInfo().getIllType());
 	}
 	/* This method is used for getting user input. The method prompts the user
 	 * for data with the prompt string argument. If there is an IO error, or the
@@ -156,6 +161,94 @@ public class TravProfInterface {
 	 * for a question that requires a numerical answer), the method will continue
 	 * to prompt the user until it gets valid data.
 	 */
+	private void displayAllProfiles()
+	{
+		displayTravProf(database.findFirstProfile());
+		boolean done = false;
+		while (done == false) {
+			try 
+			{
+				displayTravProf(database.findNextProfile());
+			}
+			catch (java.lang.Exception e)
+			{
+				done = true;
+			}
+		}
+	}
+	
+	private void modifyTravProf()
+	{
+		boolean valid;
+		do {
+			valid = true;
+			TravProf temp = database.findProfile(travAgentID, inputString("Last name? ", "string"));
+			displayTravProf(temp);
+			int choice = Integer.parseInt(inputString("Modify which field? (Enter the number)","int"));
+			switch (choice) {
+				case 1:
+					temp.setAddress(inputString("New Address?", "string"));
+					break;
+				case 2:
+					temp.setPhone(inputString("New Phone?", "string"));
+					break;
+				case 3:
+					temp.setPaymentType((inputString("New Payment Type?", "string")));
+					break;
+				case 4:
+					temp.setTravelType(inputString("New Travel Type?", "string"));
+					break;
+				case 5:
+					temp.setTripCost(Float.parseFloat(inputString("New Trip Cost?", "float")));
+					break;
+				case 6:
+					MedCond tempMed = temp.getMedCondInfo();
+					tempMed.setMdContact(inputString("New Medical Contact?","string"));
+					break;
+				case 7:
+					MedCond tempMed1 = temp.getMedCondInfo();
+					tempMed1.setMdPhone(inputString("New Medical Phone?","string"));
+					break;
+				case 8:
+					MedCond tempMed2 = temp.getMedCondInfo();
+					boolean validAlg;
+					do {
+						validAlg = true;
+						try
+						{
+							tempMed2.setAlgType(inputString("New Allergy?","string"));
+						}
+						catch (java.lang.Exception e)
+						{
+							validAlg = false;
+						}
+						
+					} while (validAlg == false);
+					break;
+				case 9:
+					MedCond tempMed3 = temp.getMedCondInfo();
+					boolean validIllness;
+					do {
+						validIllness = true;
+						try
+						{
+							tempMed3.setIllType(inputString("New Illness?","string"));
+						}
+						catch (java.lang.Exception e)
+						{
+							validIllness = false;
+						}
+						
+					} while (validIllness == false);
+					break;
+				default:
+					valid = false;
+					break;
+			}
+		} while (valid == false);
+		
+	}
+	
 	private String inputString(String prompt, String type)
 	{
 		boolean valid;
@@ -197,7 +290,7 @@ public class TravProfInterface {
 				}
 			}
 			if (valid==false)
-				System.out.println("That wasn't a valid entry for the question. Try again.")
+				System.out.println("That wasn't a valid entry for the question. Try again.");
 			
 		} while (valid==false);
 		return input;
