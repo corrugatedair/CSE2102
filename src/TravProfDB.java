@@ -170,9 +170,9 @@ public class TravProfDB {
 				String algType = medCondInfo.getAlgType();
 				String illType = medCondInfo.getIllType();
 
-				out.write(travAgentID + ", " + firstName + ", " + lastName + ", " + address
-						+ ", " + phone + ", " + tripCost + ", " + travelType + ", " + paymentType
-						+ ", " + mdContact + ", " + mdPhone + ", " + algType + ", " + illType + "\n");
+				out.write(travAgentID + "," + firstName + "," + lastName + "," + address
+						+ "," + phone + "," + tripCost + "," + travelType + "," + paymentType
+						+ "," + mdContact + "," + mdPhone + "," + algType + "," + illType + "\n");
 
 			}
 	        out.close();
@@ -211,6 +211,7 @@ public class TravProfDB {
 					mystr[10],
 					mystr[11]);
 		} catch (Exception e) {
+			System.out.println(e);
 			medCondInfo = null;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -222,7 +223,7 @@ public class TravProfDB {
 				mystr[2],
 				mystr[3],
 				mystr[4],
-				(float)Integer.parseInt(mystr[5]),
+				Float.parseFloat(mystr[5]),
 				mystr[6],
 				mystr[7],
 				medCondInfo));
