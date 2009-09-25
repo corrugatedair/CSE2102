@@ -44,6 +44,7 @@ public class TravProf {
 		tripCost = myTripCost;
 		travelType = myTravelType;
 		paymentType = myPaymentType;
+		medCondInfo = myMedCond;
 		
 	}
 	
