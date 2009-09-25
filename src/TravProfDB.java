@@ -154,6 +154,7 @@ public class TravProfDB {
 	        
 			for (int ii = 0; ii < travelerList.size(); ii++)
 			{
+				
 				TravProf myTempTravProf = travelerList.get(ii);
 				String travAgentID = myTempTravProf.getTravAgentID();
 				String firstName = myTempTravProf.getFirstName();
