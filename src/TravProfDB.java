@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -172,7 +173,7 @@ public class TravProfDB {
 
 				out.write(travAgentID + "," + firstName + "," + lastName + "," + address
 						+ "," + phone + "," + tripCost + "," + travelType + "," + paymentType
-						+ "," + mdContact + "," + mdPhone + "," + algType + "," + illType + "\n");
+						+ "," + mdContact + "," + mdPhone + "," + algType + "," + illType + "\r\n");
 
 			}
 	        out.close();
@@ -192,6 +193,10 @@ public class TravProfDB {
 	            process(str);
 	        }
 	        in.close();
+		}
+		catch (java.io.FileNotFoundException e)
+		{
+			System.out.println("Database doesn't exist");
 	    } catch (Exception e) {
 	    	System.out.println(e);
 	    }

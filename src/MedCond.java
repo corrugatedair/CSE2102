@@ -75,7 +75,11 @@ public class MedCond {
 	{
 		return algType;
 	}
-	public void setAlgType(String _algType) throws Exception
+	/* These methods check to make sure that the allergies and illness
+	 * are valid entries; that is, they are one of several options. If
+	 * they aren't, an exception is thrown.
+	 */
+	public void setAlgType(String _algType) throws Exception 
 	{
 		if (!checkIfValid(_algType, validAlgTypes))
 		{
